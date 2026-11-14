@@ -1,0 +1,36 @@
+version: 1
+name: UK Postcode Intel
+description: "Full area intelligence for any UK postcode in one call (full_area_intelligence): Census 2021 demographics vs council and nation, IoD 2025 deprivation, street crime, live flood warnings, Land Registry sold prices for the postcode and its neighbours, FSA food hygiene, plain-English summary and source attribution. Plus 6 cheap atomic tools. Official open data, pay per call in USDC on Base."
+runtime: python
+entry: src/uk_postcode_intel/server.py
+
+build:
+  install: uv sync --frozen --no-dev
+
+startCommand:
+  type: http
+  command: .venv/bin/python -m uk_postcode_intel.server
+
+# x402 pay-per-call. Must match the dashboard Payments tab (set 14 Nov 2026 ~01:00 UK)
+# so a deploy never resets live prices. Edit both together.
+pricing:
+  protocol: x402
+  network: base
+  recipient: "0xd9784f8122af988E51b3183F725b0b53BCb8278A"
+  asset: usdc
+  tools:
+    - name: full_area_intelligence
+      price: "0.15"
+      description: "Headline: complete area report - demographics, deprivation, crime, flood, house prices (postcode + neighbours), food hygiene, summary"
+    - name: area_report
+      price: "0.05"
+    - name: house_prices
+      price: "0.02"
+    - name: crime_summary
+      price: "0.01"
+    - name: flood_warnings
+      price: "0.01"
+    - name: food_hygiene_nearby
+      price: "0.01"
+    - name: postcode_lookup
+      price: "0.01"
