@@ -59,6 +59,8 @@ Point an MCP client that supports Streamable HTTP at the hosted endpoint:
 }
 ```
 
+For Cline, use `"type": "streamableHttp"` and follow [llms-install.md](llms-install.md).
+
 An x402-capable client will settle the 402 payment requirement and retry the tool call. A client that does not handle x402 can still complete the initialize handshake and list tools; unpaid tool calls will fail with HTTP 402.
 
 ### Raw HTTP
